@@ -1,10 +1,10 @@
 public class ColumnFormatter {
     private int padding = 0;
     private int _minPad = 4; // to give a minimum number of spaces between columns
-    private int columns;
+    private int columns = 1;
     private String[] set;
-    ColumnFormatter()   {
-        columns = 0;
+    ColumnFormatter(String[] set)   {
+        this.set = set;
     }
     ColumnFormatter(int columns)    {
         this.columns = columns;
