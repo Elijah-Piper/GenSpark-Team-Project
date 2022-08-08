@@ -3,15 +3,28 @@ import org.junit.Test;
 public class ColumnTester   {
     @Test
     public void construct() {
+        System.out.println("Testing several means of construction:");
         String[] testSet = { "p[p", "ppp", "ppppp" };
-        System.out.println(testSet);
         ColumnFormatter test = new ColumnFormatter(testSet, 3);
-        System.out.println(test);
-        test = new ColumnFormatter(testSet);
-        System.out.println(test);
-        System.out.println("\n");
+        String[] got = test.getSet();
+        for (String s : got)
+            System.out.println(s);
+        assert test.getSet()[0].compareTo("p[p      ppp      ppppp") == 0;
+        System.out.println("\nnext\n");
+        test.setColumns(1);
+        String[] expected = { "p[p", "ppp", "ppppp" };
+        got = test.getSet();
+        System.out.println("checking single column printing");
+        for (String s : got)
+            System.out.println(s);
+        assert got.length == 3;
+        for (int i = 0; i < 3; i++)
+            assert got[i].compareTo(expected[i]) == 0;
+        System.out.println("\ntesting compound set\n");
         test.add(testSet);
         test.setColumns(4);
-        System.out.println(test);
+        got = test.getSet();
+        for (String s : got)
+            System.out.println(s);
     }
 }
