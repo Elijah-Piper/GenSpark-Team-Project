@@ -18,10 +18,13 @@ public class ColumnFormatter {
         setPadding();
     }
     private void setPadding()   {
+        padding = 0;
         for (String s : set)
             if (s.length() > padding)
                 padding = s.length();
+        System.out.println("pad " + padding);
         padding += _minPad;
+        System.out.println(padding);
     }
     public void setColumns(int columns)  {
         this.columns = columns;
