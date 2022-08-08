@@ -15,6 +15,7 @@ public class ColumnFormatter {
     }
     ColumnFormatter(String[] set, int columns)   {
         Collections.addAll(this.set, set);
+        this.columns = columns;
         setPadding();
     }
     private void setPadding()   {
@@ -22,9 +23,7 @@ public class ColumnFormatter {
         for (String s : set)
             if (s.length() > padding)
                 padding = s.length();
-        System.out.println("pad " + padding);
         padding += _minPad;
-        System.out.println(padding);
     }
     public void setColumns(int columns)  {
         this.columns = columns;
@@ -44,20 +43,26 @@ public class ColumnFormatter {
     public void remove(Object o)    {
         set.remove(o);
     }
-    public String[] getSet()    {
-        StringBuilder temp;
-        int maxStringsInCol = set.size() / columns;
-        maxStringsInCol += set.size() % columns;
-        String[] outSet = new String[maxStringsInCol];
-        for (int i = 0; i < maxStringsInCol; i++)   {
-            temp = new StringBuilder(set.get(i));
-            if (i + maxStringsInCol < set.size())   {
-                while (temp.length() < padding)
-                    temp.append(' ');
-                temp.append(set.get(i + maxStringsInCol));
-            }
-            outSet[i] = temp.toString();
+    private String appendEveryX(int start, int interval)    {
+        StringBuilder temp = new StringBuilder(set.get(start));
+        int j = 1;
+        start += interval;
+        while (start < set.size())  {
+            while (temp.length() < (padding * j))
+                temp.append(' ');
+            j++;
+            temp.append(set.get(start));
+            start += interval;
         }
+        return temp.toString();
+    }
+    public String[] getSet()    {
+        int maxStringsInCol = set.size() / columns;
+        if (set.size() % columns != 0)
+            maxStringsInCol++;
+        String[] outSet = new String[maxStringsInCol];
+        for (int i = 0; i < maxStringsInCol; i++)
+            outSet[i] = appendEveryX(i, maxStringsInCol);
         return outSet;
     }
     @Override
