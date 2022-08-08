@@ -8,12 +8,16 @@ public class ColumnFormatter {
     private ArrayList<String> set = new ArrayList<>();
     ColumnFormatter(String[] set)   {
         Collections.addAll(this.set, set);
+        setPadding();
     }
     ColumnFormatter(int columns)    {
         this.columns = columns;
     }
     ColumnFormatter(String[] set, int columns)   {
         Collections.addAll(this.set, set);
+        setPadding();
+    }
+    private void setPadding()   {
         for (String s : set)
             if (s.length() > padding)
                 padding = s.length();
@@ -25,9 +29,11 @@ public class ColumnFormatter {
     public void setStrings(String[] strings) {
         set = new ArrayList<>();
         Collections.addAll(set, strings);
+        setPadding();
     }
     public void add(String[] strings)   {
         Collections.addAll(set, strings);
+        setPadding();
     }
     public void remove(int index)   {
         set.remove(index);
@@ -47,6 +53,7 @@ public class ColumnFormatter {
                     temp.append(' ');
                 temp.append(set.get(i + maxStringsInCol));
             }
+            outSet[i] = temp.toString();
         }
         return outSet;
     }
