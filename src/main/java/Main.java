@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static int determineUtil(String input) {
+    protected static int determineUtil(String input) {
         // Returns '1' for the ColumnFormatter or '2' for the Scheduler
         // Input may be numbers directly, the utility name, or abbreviation of the utility
         // If utility can't be determined, returns 0
@@ -29,7 +29,7 @@ public class Main {
         else return 0;
     }
 
-    public static boolean getUserUtilChoice() {
+    protected static boolean getUserUtilChoice() {
         // Uses scanner to ask user which utility to call
         // Calls Main.determineUtil()
         // Returns true if utility is ColumnFormatter and false if utility is Scheduler
@@ -59,7 +59,7 @@ public class Main {
         return utilFound == 1;
     }
 
-    public static List<String> readInputFile(String path) {
+    protected static List<String> readInputFile(String path) {
         // Returns a list of all lines from input text file path given
         // Returns an empty list if no file is found
         List<String> lines = new ArrayList<>();
@@ -76,7 +76,7 @@ public class Main {
         return lines;
     }
 
-    public static List<String> getUserInputData(boolean isCF) {
+    protected static List<String> getUserInputData(boolean isCF) {
         Scanner sc = new Scanner(System.in);
 
         System.out.printf("Please enter the absolute path to the text file you'd like to %s%n",
@@ -85,6 +85,8 @@ public class Main {
 
         return readInputFile(path);
     }
+
+
 
     public static void main(String[] args) {
 
