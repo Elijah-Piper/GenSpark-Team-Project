@@ -12,3 +12,4 @@ This is a console text-based program containing two seperate utilities, (1) a to
      * For the scheduler, the user can enter: "2", "s", "scheduler", or "scheduling".
      * If the desired utility cannot be determined, the user will be prompted to try again.
 2. Another prompt will appear asking the user for the absolute path (file location) for the input text file. (example: C:\Documents\example_input_file.txt)
+3. If column formatting is selected, a second prompt will appear asking how many columns to sort the data into. Only numbers greater than 0 will be accepted for this prompt.

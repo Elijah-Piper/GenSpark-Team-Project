@@ -59,15 +59,15 @@ public class Main {
         return utilFound == 1;
     }
 
-    protected static List<String> readInputFile(String path) {
+    protected static ArrayList<String> readInputFile(String path) {
         // Returns a list of all lines from input text file path given
         // Returns an empty list if no file is found
-        List<String> lines = new ArrayList<>();
+        ArrayList<String> lines = new ArrayList<>();
 
         try {
             File f = new File(path);
             if (f.exists()) {
-                lines = Files.readAllLines(Paths.get(path));
+                lines = new ArrayList<>(Files.readAllLines(Paths.get(path)));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -76,7 +76,8 @@ public class Main {
         return lines;
     }
 
-    protected static List<String> getUserInputData(boolean isCF) {
+    protected static ArrayList<String> getUserInputData(boolean isCF) {
+        // Prompts user for file path, passes that path into Main.readInputFile(), and returns the result
         Scanner sc = new Scanner(System.in);
 
         System.out.printf("Please enter the absolute path to the text file you'd like to %s%n",
@@ -86,12 +87,69 @@ public class Main {
         return readInputFile(path);
     }
 
+    protected static ArrayList<String> runColumnFormatter(ArrayList<String> inputData) {
+        /*
 
+        ########################################### ColumnFormatter call here ###########################################
+
+         */
+        // Takes in input data as ArrayList,
+        // Does colum formatting operations using ColumnFormatter object,
+        // And outputs the resulting data in a new ArrayList
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("How many columns would you like to format your data into?");
+
+        int numCol = 0;
+        String input;
+        while (numCol < 1) { // If input is not a single number or is less than 1, ask user to try again
+            input = sc.nextLine();
+            if (input.matches("[0-9]+")) {
+                numCol = Integer.parseInt(input);
+            }
+            if (numCol < 1) System.out.println("Invalid input, please enter a whole number of columns of 1 or greater");
+        }
+
+        ColumnFormatter formatter = new ColumnFormatter(inputData, numCol);
+
+        return formatter.getSetAsList();
+    }
+
+    protected static ArrayList<String> runScheduler(ArrayList<String> inputData) {
+        /*
+
+        ########################################### Scheduler call here ###########################################
+
+         */
+        // Takes input data as ArrayList,
+        // Does scheduler operations using Scheduler object,
+        // And outputs the resulting data in a new ArrayList
+        Scanner sc = new Scanner(System.in);
+
+        Scheduler sched = new Scheduler();
+
+        ArrayList<String> result = new ArrayList<>();
+
+        return result;
+    }
 
     public static void main(String[] args) {
 
        boolean isCF = getUserUtilChoice(); // True if user requested ColumnFormatter, false if Scheduler
+        List<String> inputData = getUserInputData(isCF);
 
-       List<String> inputData = getUserInputData(isCF);
+        ArrayList<String> inputData = getUserInputData(isCF);
+        ArrayList<String> outputData;
+
+        if (isCF) outputData = runColumnFormatter(inputData);
+        else outputData = runScheduler(inputData);
+
+        System.out.println("Your new data:\n");
+
+        for (String line : outputData) {
+            System.out.println(line);
+        }
+
+
     }
 }
