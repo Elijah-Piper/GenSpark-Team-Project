@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -126,7 +125,7 @@ public class Main {
         // And outputs the resulting data in a new ArrayList
         Scanner sc = new Scanner(System.in);
 
-        Scheduler sched = new Scheduler();
+        // Scheduler sched = new Scheduler();
 
         ArrayList<String> result = new ArrayList<>();
 
@@ -135,8 +134,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-       boolean isCF = getUserUtilChoice(); // True if user requested ColumnFormatter, false if Scheduler
-        List<String> inputData = getUserInputData(isCF);
+        boolean isCF = getUserUtilChoice(); // True if user requested ColumnFormatter, false if Scheduler
 
         ArrayList<String> inputData = getUserInputData(isCF);
         ArrayList<String> outputData;
