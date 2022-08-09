@@ -135,7 +135,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        boolean isCF = getUserUtilChoice(); // True if user requested ColumnFormatter, false if Scheduler
+       boolean isCF = getUserUtilChoice(); // True if user requested ColumnFormatter, false if Scheduler
+        List<String> inputData = getUserInputData(isCF);
 
         ArrayList<String> inputData = getUserInputData(isCF);
         ArrayList<String> outputData;
@@ -149,9 +150,6 @@ public class Main {
             System.out.println(line);
         }
 
+
     }
 }
-
-
-
-
