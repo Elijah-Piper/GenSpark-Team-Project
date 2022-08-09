@@ -90,8 +90,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        boolean isCF = getUserUtilChoice(); // True if user requested ColumnFormatter, false if Scheduler
+       boolean isCF = getUserUtilChoice(); // True if user requested ColumnFormatter, false if Scheduler
 
-        List<String> inputData = getUserInputData(isCF);
+       List<String> inputData = getUserInputData(isCF);
     }
 }
