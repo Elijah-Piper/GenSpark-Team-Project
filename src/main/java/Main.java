@@ -62,12 +62,10 @@ public class Main {
     public static List<String> readInputFile(String path) {
         // Returns a list of all lines from input text file path given
         // Returns an empty list if no file is found
-        List<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<>();
 
         try {
             File f = new File(path);
-            lines = new ArrayList<String>();
-
             if (f.exists()) {
                 lines = Files.readAllLines(Paths.get(path));
             }
