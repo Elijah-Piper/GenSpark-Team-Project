@@ -48,6 +48,10 @@ public class ColumnFormatter {
         Collections.addAll(set, strings);
         setPadding();
     }
+    public void add(ArrayList<String> strings)  {
+        set.addAll(strings);
+        setPadding();
+    }
     public void remove(int index)   {
         set.remove(index);
     }
