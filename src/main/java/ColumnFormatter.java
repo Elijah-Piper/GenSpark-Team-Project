@@ -1,5 +1,8 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ColumnFormatter {
     private int padding = 0;
@@ -10,11 +13,19 @@ public class ColumnFormatter {
         Collections.addAll(this.set, set);
         setPadding();
     }
+    ColumnFormatter(ArrayList<String> set)  {
+        this.set = set;
+    }
     ColumnFormatter(int columns)    {
         this.columns = columns;
     }
     ColumnFormatter(String[] set, int columns)   {
         Collections.addAll(this.set, set);
+        this.columns = columns;
+        setPadding();
+    }
+    ColumnFormatter(ArrayList<String> set, int columns)   {
+        this.set = set;
         this.columns = columns;
         setPadding();
     }
@@ -56,7 +67,7 @@ public class ColumnFormatter {
         }
         return temp.toString();
     }
-    public String[] getSet()    {
+    private String[] makeSet()  {
         int maxStringsInCol = set.size() / columns;
         if (set.size() % columns != 0)
             maxStringsInCol++;
@@ -65,9 +76,15 @@ public class ColumnFormatter {
             outSet[i] = appendEveryX(i, maxStringsInCol);
         return outSet;
     }
+    public String[] getSetAsArray()    {
+        return makeSet();
+    }
+    public ArrayList<String> getSetAsList()   {
+        return new ArrayList<>(Arrays.asList(makeSet()));
+    }
     @Override
     public String toString()  {
-        String[] temp = getSet();
+        String[] temp = getSetAsArray();
         if (temp.length == 0)
             return "";
         String out = temp[0];
