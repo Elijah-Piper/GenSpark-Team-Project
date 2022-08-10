@@ -75,7 +75,7 @@ public class Scheduler {
         SEvent network = null;
         for(SEvent event : listOfEvents){
 
-            if(!track1.contains(event) && !event.isNetworking){
+            if(!track.contains(event) && !event.isNetworking){
                 if((timeAllotted <= 150 && event.duration == 30) || (timeAllotted <= 135 && event.duration ==45) || (timeAllotted <= 120 && event.duration == 60)){
                     track.add(event);
                     timeAllotted = timeAllotted + event.duration;
