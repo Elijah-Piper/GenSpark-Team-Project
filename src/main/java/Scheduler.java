@@ -91,9 +91,9 @@ public class Scheduler {
             }
 
         }
-        if(timeAllotted >= 180){
+       
         track.add(network);
-        }
+        
     }
 
     public String printOut(){
