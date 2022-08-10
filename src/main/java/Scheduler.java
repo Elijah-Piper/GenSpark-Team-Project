@@ -61,7 +61,7 @@ public class Scheduler {
                 if((timeAllotted <= 150 && event.duration == 30) || (timeAllotted <= 135 && event.duration ==45) || (timeAllotted <= 120 && event.duration == 60)){
                     track.add(event);
                     timeAllotted = timeAllotted + event.duration;
-                }else{
+                }else if(timeAllotted == 180){
                     track.add(lunch);
                     break;
                 }
