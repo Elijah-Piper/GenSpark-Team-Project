@@ -2,10 +2,19 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
+
+    protected static String filePath;
 
     protected static int determineUtil(String input) {
         // Returns '1' for the ColumnFormatter or '2' for the Scheduler
@@ -61,6 +70,7 @@ public class Main {
     protected static ArrayList<String> readInputFile(String path) {
         // Returns a list of all lines from input text file path given
         // Returns an empty list if no file is found
+        filePath = path;
         ArrayList<String> lines = new ArrayList<>();
 
         try {
@@ -114,7 +124,7 @@ public class Main {
         return formatter.getSetAsList();
     }
 
-    protected static ArrayList<String> runScheduler(ArrayList<String> inputData) {
+    protected static ArrayList<String> runScheduler() {
         /*
 
         ########################################### Scheduler call here ###########################################
@@ -125,9 +135,36 @@ public class Main {
         // And outputs the resulting data in a new ArrayList
         Scanner sc = new Scanner(System.in);
 
-        // Scheduler sched = new Scheduler();
+        Scheduler schedule = new Scheduler(filePath);
 
         ArrayList<String> result = new ArrayList<>();
+
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mma        "); // [zero-padded hour:zero-padded min + AM/PM]
+        final LocalTime STARTTIME = LocalTime.of(9, 0);
+        LocalTime tempTime = STARTTIME;
+
+        String tempStr = "";
+        String duration = "";
+        result.add("Track 1:");
+        for (SEvent e : schedule.track1) {
+            if (e.duration == 0) duration = "Event";
+            else if (e.duration == 5) duration = "lightning";
+            else duration = e.duration + "min";
+            tempStr = tempTime.format(timeFormat) + e.title + "        " + duration;
+            result.add(tempStr);
+            tempTime = tempTime.plusMinutes(e.duration);
+        }
+        tempTime = STARTTIME;
+
+        result.add("\nTrack 2:");
+        for (SEvent e : schedule.track2) {
+            if (e.duration == 0) duration = "Event";
+            else if (e.duration == 5) duration = "lightning";
+            else duration = e.duration + "min";
+            tempStr = tempTime.format(timeFormat) + e.title + "        " + duration;
+            result.add(tempStr);
+            tempTime = tempTime.plusMinutes(e.duration);
+        }
 
         return result;
     }
@@ -139,8 +176,8 @@ public class Main {
         ArrayList<String> inputData = getUserInputData(isCF);
         ArrayList<String> outputData;
 
-        if (isCF) outputData = runColumnFormatter(inputData);
-        else outputData = runScheduler(inputData);
+        if (isCF) outputData = runColumnFormatter(inputData); // ColumnFormatter
+        else outputData = runScheduler(); // Scheduler
 
         System.out.println("Your new data:\n");
 
