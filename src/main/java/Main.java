@@ -140,25 +140,54 @@ public class Main {
 
         String tempStr = "";
         String duration = "";
+        boolean NENotFound = true;
         result.add("Track 1:");
         for (SEvent e : schedule.track1) {
-            if (e.duration == 0) duration = "Event";
-            else if (e.duration == 5) duration = "lightning";
-            else duration = e.duration + "min";
-            tempStr = tempTime.format(timeFormat) + e.title + "        " + duration;
+            if (e.title.equalsIgnoreCase("lunch")) {
+                tempStr = LocalTime.of(12, 0).format(timeFormat) + "Lunch";
+                tempTime = LocalTime.of(13, 0);
+                result.add(tempStr);
+            } else if (e.title.equalsIgnoreCase("networking")) {
+                tempStr = LocalTime.of(17, 0).format(timeFormat) + "Networking        Event";
+                result.add(tempStr);
+                NENotFound = false;
+            }
+            else {
+                if (e.duration == 5) duration = "lightning";
+                else duration = e.duration + "min";
+                tempStr = tempTime.format(timeFormat) + e.title + "        " + duration;
+                result.add(tempStr);
+                tempTime = tempTime.plusMinutes(e.duration);
+            }
+        }
+        if (NENotFound) {
+            tempStr = LocalTime.of(17, 0).format(timeFormat) + "Networking        Event";
             result.add(tempStr);
-            tempTime = tempTime.plusMinutes(e.duration);
         }
         tempTime = STARTTIME;
 
         result.add("\nTrack 2:");
         for (SEvent e : schedule.track2) {
-            if (e.duration == 0) duration = "Event";
-            else if (e.duration == 5) duration = "lightning";
-            else duration = e.duration + "min";
-            tempStr = tempTime.format(timeFormat) + e.title + "        " + duration;
+            if (e.title.equalsIgnoreCase("lunch")) {
+                tempStr = LocalTime.of(12, 0).format(timeFormat) + "Lunch";
+                tempTime = LocalTime.of(13, 0);
+                result.add(tempStr);
+            } else if (e.title.equalsIgnoreCase("networking")) {
+                tempStr = LocalTime.of(17, 0).format(timeFormat) + "Networking        Event";
+                result.add(tempStr);
+                NENotFound = false;
+            }
+            else {
+                if (e.duration == 5) duration = "lightning";
+                else duration = e.duration + "min";
+                tempStr = tempTime.format(timeFormat) + e.title + "        " + duration;
+                result.add(tempStr);
+                tempTime = tempTime.plusMinutes(e.duration);
+            }
+        }
+        if (NENotFound) {
+            tempStr = LocalTime.of(17, 0).format(timeFormat) + "Networking        Event";
             result.add(tempStr);
-            tempTime = tempTime.plusMinutes(e.duration);
         }
 
         return result;
