@@ -3,6 +3,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class ColumnFormatter {
     private int padding = 0;
@@ -31,9 +33,8 @@ public class ColumnFormatter {
     }
     private void setPadding()   {
         padding = 0;
-        for (String s : set)
-            if (s.length() > padding)
-                padding = s.length();
+        int len = set.stream().reduce("", (a,b) -> a.length() > b.length() ? a : b).length();
+        padding = Math.max(len, padding);
         padding += _minPad;
     }
     public void setColumns(int columns)  {
@@ -58,17 +59,18 @@ public class ColumnFormatter {
     public void remove(Object o)    {
         set.remove(o);
     }
-    private String appendEveryX(int start, int interval)    {
+    private String appendEveryX(final int start, final int interval)    {
         StringBuilder temp = new StringBuilder(set.get(start));
-        int j = 1;
-        start += interval;
-        while (start < set.size())  {
-            while (temp.length() < (padding * j))
-                temp.append(' ');
-            j++;
-            temp.append(set.get(start));
-            start += interval;
-        }
+        //without this assignment, the streams don't want to do anything
+        ArrayList<String> trickery = set.stream().map(a -> {
+            int index = set.indexOf(a);
+            if (index > start && index % interval == 0) {
+                while (temp.length() % padding != 0)
+                    temp.append(' ');
+                temp.append(a);
+            }
+            return temp.toString();
+        }).collect(Collectors.toCollection(ArrayList::new));
         return temp.toString();
     }
     private String[] makeSet()  {
